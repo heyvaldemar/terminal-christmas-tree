@@ -32,7 +32,7 @@
 # chmod +x terminal-christmas-tree.sh
 
 # Start the terminal-christmas-tree.sh using the command:
-# ./chmod +x terminal-christmas-tree.sh
+# ./terminal-christmas-tree.sh
 
 trap "tput reset; tput cnorm; exit" 2
 clear
