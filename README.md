@@ -12,25 +12,30 @@ Start the `terminal-christmas-tree.sh` using the command:
 
 `./terminal-christmas-tree.sh`
 
-![terminal-christmas-tree-1](https://user-images.githubusercontent.com/10498744/147349510-cf4cb55e-255c-405c-9f7d-624924e1efc1.gif)
+![christmas-tree-for-terminal](https://github.com/heyValdemar/terminal-christmas-tree/assets/10498744/70334aa5-2377-4d2e-bffc-31adbf3327de)
 
 # Author
-hey, I’m Vladimir Mikhalev, but my friends call me Valdemar.
+
+I’m Vladimir Mikhalev, the [Docker Captain](https://www.docker.com/captains/vladimir-mikhalev/), but my friends can call me Valdemar.
 
 🌐 My [website](https://www.heyvaldemar.com/) with detailed IT guides\
 🎬 Follow me on [YouTube](https://www.youtube.com/channel/UCf85kQ0u1sYTTTyKVpxrlyQ?sub_confirmation=1)\
 🐦 Follow me on [Twitter](https://twitter.com/heyValdemar)\
 🎨 Follow me on [Instagram](https://www.instagram.com/heyvaldemar/)\
+🐘 Follow me on [Mastodon](https://hachyderm.io/@heyValdemar)\
+🧊 Follow me on [Bluesky](https://bsky.app/profile/heyvaldemar.bsky.social)\
 🎸 Follow me on [Facebook](https://www.facebook.com/heyValdemarFB/)\
 🎥 Follow me on [TikTok](https://www.tiktok.com/@heyvaldemar)\
 💻 Follow me on [LinkedIn](https://www.linkedin.com/in/heyvaldemar/)\
 🐈 Follow me on [GitHub](https://github.com/heyvaldemar)
 
 # Communication
+
 👾 Chat with IT pros on [Discord](https://discord.gg/AJQGCCBcqf)\
 📧 Reach me at ask@sre.gg
 
 # Give Thanks
+
 💎 Support on [GitHub](https://github.com/sponsors/heyValdemar)\
 🏆 Support on [Patreon](https://www.patreon.com/heyValdemar)\
 🥤 Support on [BuyMeaCoffee](https://www.buymeacoffee.com/heyValdemar)\
