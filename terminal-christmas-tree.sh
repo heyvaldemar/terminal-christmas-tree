@@ -6,7 +6,6 @@ tput civis
 lin=2
 col=$(($(tput cols) / 2))
 c=$((col-1))
-est=$((c-2))
 color=0
 tput setaf 2; tput bold
 
@@ -18,8 +17,8 @@ for ((i=1; i<20; i+=2))
     {
         echo -n \*
     }
-    let lin++
-    let col--
+    ((lin++))
+    ((col--))
 }
 
 tput sgr0; tput setaf 3
@@ -31,11 +30,11 @@ for ((i=1; i<=2; i++))
     echo 'mWm'
 }
 new_year=$(date +'%Y')
-let new_year++
+((new_year++))
 tput setaf 1; tput bold
 tput cup $lin $((c - 6)); echo MERRY CHRISTMAS
 tput cup $((lin + 1)) $((c - 10)); echo And lots of CODE in $new_year
-let c++
+((c++))
 k=1
 
 # Lights and decorations
@@ -44,8 +43,8 @@ while true; do
         # Turn off the lights
         [ $k -gt 1 ] && {
             tput setaf 2; tput bold
-            tput cup ${line[$[k-1]$i]} ${column[$[k-1]$i]}; echo \*
-            unset line[$[k-1]$i]; unset column[$[k-1]$i]  # Array cleanup
+            tput cup "${line[$((k-1))$i]}" "${column[$((k-1))$i]}"; echo \*
+            unset "line[$((k-1))$i]"; unset "column[$((k-1))$i]"  # Array cleanup
         }
 
         li=$((RANDOM % 9 + 3))
@@ -63,7 +62,7 @@ while true; do
         do
             tput cup $((lin+1)) $((c+sh))
             echo $l
-            let sh++
+            ((sh++))
             sleep 0.01
         done
     }

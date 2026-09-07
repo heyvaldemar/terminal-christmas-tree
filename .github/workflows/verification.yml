@@ -1,0 +1,62 @@
+name: Verification
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: verification-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint the script and the workflow
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: ShellCheck
+        # Pinned, and the same image a maintainer runs locally: Ubuntu's
+        # packaged shellcheck is a different version with different defaults.
+        run: |
+          docker run --rm -v "$PWD:/mnt" -w /mnt koalaman/shellcheck:v0.11.0 terminal-christmas-tree.sh
+
+      - name: actionlint
+        run: |
+          docker run --rm -v "$PWD:/mnt" -w /mnt rhysd/actionlint:1.7.12 -color
+
+  run:
+    name: The tree draws and keeps blinking
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Run it headless for four seconds
+        # The script animates forever, so the pass condition is that it is
+        # STILL RUNNING when the timeout kills it (exit 124) and wrote a tree
+        # first. An early exit - a tput that failed without a terminal, an
+        # arithmetic error - is a different exit code, and that fails here.
+        run: |
+          set +e
+          TERM=xterm script -qec 'timeout 4 bash terminal-christmas-tree.sh' /tmp/typescript >/dev/null 2>&1
+          rc=$?
+          set -e
+          if [ "$rc" -ne 124 ]; then
+            echo "::error::expected the timeout to end the run (124); the script exited $rc on its own"
+            tail -c 600 /tmp/typescript | cat -v
+            exit 1
+          fi
+          grep -q 'MERRY CHRISTMAS' /tmp/typescript || { echo "::error::no greeting was drawn"; exit 1; }
+          echo "drew the tree and was still blinking at four seconds"
