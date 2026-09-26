@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+_(no unreleased changes yet)_
+
+## [1.1.0] - 2026-09-26
+
 ### Added
 
 - **A test of what the tree shows, and proof that it can fail.** `tests/run-headless.sh` checks the tree's size, the trunk, next year in the greeting, that it keeps blinking, and that Ctrl-C gives the cursor back; `tests/plant-violations.py` breaks each of those six ways on a copy and requires the test to notice. Both run in CI on every push.
