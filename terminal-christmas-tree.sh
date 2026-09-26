@@ -1,6 +1,12 @@
 #!/bin/bash
 
-trap "tput reset; tput cnorm; exit" 2
+# Give the terminal back on Ctrl-C and on termination: colours off, cursor
+# on, screen cleared. `tput reset` did this once, and it both wipes the
+# scrollback and can stall on a terminal that does not answer it, leaving the
+# cursor hidden; these three do only what is needed.
+restore() { tput sgr0; tput cnorm; clear; }
+trap 'restore; exit 130' INT
+trap 'restore; exit 143' TERM
 clear
 tput civis
 lin=2

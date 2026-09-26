@@ -15,7 +15,12 @@ The address is the raw file. The earlier instructions pointed `curl -O` at the G
 
 ## Testing
 
-CI runs ShellCheck and actionlint on every push, then runs the script headless under a pseudo-terminal for four seconds: the pass condition is that the timeout ends it — it animates forever — after the greeting was drawn. An exit of its own is a failure, which is what a `tput` that cannot find a terminal would produce.
+CI runs ShellCheck and actionlint on every push, then [`tests/run-headless.sh`](tests/run-headless.sh) runs the tree under a pseudo-terminal and checks what a person would see: the tree at its full nineteen stars, the trunk, next year in the greeting, the lights still blinking at four seconds, and the cursor visible again after Ctrl-C. [`tests/plant-violations.py`](tests/plant-violations.py) then breaks each of those on a copy of the script, six ways listed in [`tests/plants.tsv`](tests/plants.tsv), and fails the run if the test stays green through any of them.
+
+```bash
+./tests/run-headless.sh
+python3 tests/plant-violations.py -- ./tests/run-headless.sh
+```
 
 ---
 

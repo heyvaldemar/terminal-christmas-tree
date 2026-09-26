@@ -1,0 +1,7 @@
+# file	old	new	what the test must notice
+"terminal-christmas-tree.sh"	"((new_year++))"	": new_year unchanged"	"the greeting names this year instead of next"
+"terminal-christmas-tree.sh"	"trap 'restore; exit 130' INT\n"	""	"Ctrl-C leaves the terminal as the tree left it"
+"terminal-christmas-tree.sh"	"restore() { tput sgr0; tput cnorm; clear; }"	"restore() { tput sgr0; clear; }"	"the cursor is not given back"
+"terminal-christmas-tree.sh"	"for ((i=1; i<20; i+=2))"	"for ((i=1; i<10; i+=2))"	"the tree drawn at half its size"
+"terminal-christmas-tree.sh"	"echo MERRY CHRISTMAS"	"echo SEASONS GREETINGS"	"the greeting is not drawn"
+"terminal-christmas-tree.sh"	"while true; do"	"for _ in 1; do"	"the lights stop by themselves"

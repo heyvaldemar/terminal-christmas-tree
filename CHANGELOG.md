@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-_(no unreleased changes yet)_
+### Added
+
+- **A test of what the tree shows, and proof that it can fail.** `tests/run-headless.sh` checks the tree's size, the trunk, next year in the greeting, that it keeps blinking, and that Ctrl-C gives the cursor back; `tests/plant-violations.py` breaks each of those six ways on a copy and requires the test to notice. Both run in CI on every push.
+
+### Fixed
+
+- **Ctrl-C gives the terminal back at once, and termination does too.** The handler called `tput reset`, which wipes the scrollback and, on a terminal that does not answer it, stalls long enough to be killed before the cursor is shown again. It now turns colours off, shows the cursor and clears the screen, on Ctrl-C (exit 130) and on termination (exit 143). Found by the new test.
 
 ## [1.0.0] - 2026-09-23
 
