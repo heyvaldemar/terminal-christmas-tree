@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 _(no unreleased changes yet)_
 
+## [1.1.1] - 2026-11-11
+
+### Fixed
+
+- **The Ctrl-C test sends Ctrl-C the way a terminal does.** On GitHub's ubuntu-26.04 runner, `timeout` is the uutils one, and `timeout -k 5 -s INT` there sends SIGKILL right behind SIGINT. The tree was killed before its handler could show the cursor, and the test failed on a script that works. The test now writes the Ctrl-C byte into the pseudo-terminal, which turns it into SIGINT for the tree and for the command it is running. The script is unchanged, and the test still fails when Ctrl-C leaves the cursor hidden.
+
 ## [1.1.0] - 2026-09-26
 
 ### Added

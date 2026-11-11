@@ -15,10 +15,19 @@ WORK="$(mktemp -d)"; trap 'rm -rf "$WORK"' EXIT
 
 # On a pseudo-terminal, with a reader that keeps reading until the run ends:
 # `script` stops draining the terminal once its own input closes, and the
-# tree's Ctrl-C handler (tput reset) then waits for a drain that never comes.
-# A real terminal always drains, so the harness has to as well.
+# tree's exit handler then waits for a drain that never comes. A real
+# terminal always drains, so the harness has to as well.
 run_tty() {  # run_tty <signal> <seconds> <log>
   sleep "$(( $2 + 8 ))" | TERM=xterm script -qec "stty cols 80 rows 30; timeout -k 5 -s $1 $2 bash terminal-christmas-tree.sh" "$3" >/dev/null 2>&1
+}
+
+# Ctrl-C as a terminal sends it: the byte goes in through the pseudo-terminal,
+# and the line discipline turns it into SIGINT for the tree and for the tput or
+# sleep it is running at that moment. Not `timeout -s INT`: the uutils timeout
+# that Ubuntu 26.04 ships, given -k, sends SIGKILL right behind SIGINT, before
+# any handler can run. The outer timeout only bounds a tree that ignores it.
+ctrl_c_tty() {  # ctrl_c_tty <seconds> <log>
+  { sleep "$1"; printf '\003'; sleep 8; } | TERM=xterm timeout 30 script -qec "stty cols 80 rows 30; exec bash terminal-christmas-tree.sh" "$2" >/dev/null 2>&1
 }
 
 run_tty TERM 4 "$WORK/run"
@@ -38,7 +47,7 @@ next=$(( $(date +%Y) + 1 ))
 check "$(has "And lots of CODE in $next" <<<"$screen")" "it wishes for next year, $next" "the year in the greeting is not $next"
 
 # Ctrl-C: the trap must reset the terminal and show the cursor again.
-run_tty INT 3 "$WORK/int"
+ctrl_c_tty 3 "$WORK/int"
 check "$(has $'\x1b\\[?25h' "$WORK/int")" "Ctrl-C shows the cursor again" "Ctrl-C left the cursor hidden"
 
 echo
